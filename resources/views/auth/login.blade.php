@@ -1,47 +1,69 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.master')
 
-    <form method="POST" action="{{ route('login') }}">
+@section('content')
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-emerald-50 py-10">
+
+  <div class="flex w-full max-w-5xl mx-5 bg-white/70 backdrop-blur-xl shadow-2xl rounded-3xl overflow-hidden border border-white/40">
+
+    <!-- Left Panel (Brand + Illustration) -->
+    <div class="hidden md:flex md:w-1/2 bg-gradient-to-br from-green-600 to-emerald-500 text-white flex-col justify-center items-center p-10 relative">
+      <div class="absolute inset-0 bg-black/10 backdrop-blur-md"></div>
+      <div class="z-10 text-center">
+        <h1 class="text-4xl font-extrabold mb-4 tracking-wide">Welcome Back!</h1>
+        <p class="text-sm text-green-50 mb-8 leading-relaxed">
+          Ready to find your dream job? Let’s get you signed in and back on track.
+        </p>
+        <img src="https://www.shutterstock.com/search/computer-career-job" class="w-56 mx-auto drop-shadow-lg" alt="Job Illustration">
+      </div>
+    </div>
+
+    <!-- Right Panel (Login Form) -->
+    <div class="w-full md:w-1/2 p-10 flex flex-col justify-center">
+      <h2 class="text-3xl font-bold text-green-600 mb-2">Login to JobFinder</h2>
+      <p class="text-sm text-gray-500 mb-8">Enter your credentials to continue</p>
+
+      <!-- ✅ Corrected Form -->
+      <form action="{{ route('login') }}" method="POST" class="space-y-6">
         @csrf
 
-        <!-- Email Address -->
+        <!-- Email -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+          <label for="email" class="block text-gray-600 mb-2 text-sm font-medium">Email Address</label>
+          <input id="email" type="email" name="email" placeholder="you@example.com"
+                 class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-sm transition"
+                 required>
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div>
+          <label for="password" class="block text-gray-600 mb-2 text-sm font-medium">Password</label>
+          <input id="password" type="password" name="password" placeholder="••••••••"
+                 class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-sm transition"
+                 required>
         </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
+        <!-- Remember + Forgot -->
+        <div class="flex items-center justify-between text-sm">
+          <label class="flex items-center gap-2">
+            <input type="checkbox" name="remember" class="accent-green-500 rounded">
+            <span class="text-gray-600">Remember me</span>
+          </label>
+          <a href="#" class="text-green-600 hover:underline">Forgot password?</a>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+        <!-- Submit -->
+        <button type="submit"
+          class="w-full py-3 bg-green-600 hover:bg-green-700 transition text-white font-semibold rounded-xl shadow-lg hover:shadow-green-500/30">
+          <i class="fa-solid fa-right-to-bracket mr-2"></i> Login
+        </button>
+      </form>
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+      <!-- Register -->
+      <p class="text-sm text-gray-600 mt-6 text-center">
+        Don’t have an account?
+        <a href="{{ route('register') }}" class="text-green-600 font-semibold hover:underline">Register Now</a>
+      </p>
+    </div>
+  </div>
+</div>
+@endsection
