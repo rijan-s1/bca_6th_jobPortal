@@ -1,36 +1,73 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+<body class="font-sans antialiased">
+    <div class="flex min-h-screen bg-gray-50">
+
+        <!-- Sidebar -->
+        <aside class="bg-green-600 text-white w-60 flex flex-col p-5 space-y-6">
+            <!-- Brand -->
+            <div class="flex items-center gap-2 text-2xl font-bold tracking-wide mb-6">
+                <i class="fa-solid fa-briefcase"></i>
+                <h2 class="font-extrabold text-2xl tracking-wide">Job<span class="text-yellow-300">Finder</span></h2>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 space-y-2">
+                <a href="{{ route('dashboard') }}"
+                    class="font-bold text-lg block hover:bg-green-700 transition rounded-lg hover:text-white px-4 py-2">
+                    Tags
+                </a>
+
+                <a href="{{ route('dashboard') }}"
+                    class="font-bold text-lg block hover:bg-green-700 transition rounded-lg hover:text-white px-4 py-2">
+                    Companies
+                </a>
+
+                <a href="{{ route('dashboard') }}"
+                    class="font-bold text-lg block hover:bg-green-700 transition rounded-lg hover:text-white px-4 py-2">
+                    Users
+                </a>
+
+                <a href="{{ route('dashboard') }}"
+                    class="font-bold text-lg block hover:bg-green-700 transition rounded-lg hover:text-white px-4 py-2">
+                    Jobs
+                </a>
+            </nav>
+
+            <!-- Logout Button -->
+            <form method="POST" action="">
+                @csrf
+                <button type="submit"
+                    class="flex items-center gap-3 px-4 py-2 w-full text-left rounded-lg hover:bg-green-700 transition">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </form>
+        </aside>
+        <div class="p-4 flex-1">
+            <h1 class="text-2xl font-bold">@yield('title')</h1>
+            <hr class="bg-blue-600 h-1">
+            <div class="mt-4">
+                @yield('content')
+            </div>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>

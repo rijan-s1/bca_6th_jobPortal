@@ -13,7 +13,7 @@
         <p class="text-sm text-green-50 mb-8 leading-relaxed">
           Ready to find your dream job? Let’s get you signed in and back on track.
         </p>
-        <img src="https://www.shutterstock.com/search/computer-career-job" class="w-56 mx-auto drop-shadow-lg" alt="Job Illustration">
+        <img src="{{ asset('images/job.png') }}" class="w-56 mx-auto drop-shadow-lg" alt="Job Illustration">
       </div>
     </div>
 
