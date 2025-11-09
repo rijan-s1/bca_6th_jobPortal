@@ -16,11 +16,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased ">
     <div class="flex min-h-screen bg-gray-50">
 
         <!-- Sidebar -->
-        <aside class="bg-green-600 text-white w-60 flex flex-col p-5 space-y-6">
+        <aside
+            class="bg-gradient-to-b from-slate-900 via-indigo-900 to-purple-900 text-white w-60 flex flex-col p-5 space-y-6">
             <!-- Brand -->
             <div class="flex items-center gap-2 text-2xl font-bold tracking-wide mb-6">
                 <i class="fa-solid fa-briefcase"></i>
@@ -30,22 +31,26 @@
             <!-- Navigation -->
             <nav class="flex-1 space-y-2">
                 <a href="{{ route('dashboard') }}"
-                    class="font-bold text-lg block hover:bg-green-700 transition rounded-lg hover:text-white px-4 py-2">
+                    class="font-bold text-lg block hover:bg-gradient-to-r hover:from-indigo-500 hover:via-purple-500 rounded-lg
+                     hover:text-white px-4 py-2">
                     Tags
                 </a>
 
                 <a href="{{ route('dashboard') }}"
-                    class="font-bold text-lg block hover:bg-green-700 transition rounded-lg hover:text-white px-4 py-2">
+                    class="font-bold text-lg block hover:bg-gradient-to-r hover:from-indigo-500 hover:via-purple-500 rounded-lg
+                     hover:text-white px-4 py-2">
                     Companies
                 </a>
 
                 <a href="{{ route('dashboard') }}"
-                    class="font-bold text-lg block hover:bg-green-700 transition rounded-lg hover:text-white px-4 py-2">
+                    class="font-bold text-lg block hover:bg-gradient-to-r hover:from-indigo-500 hover:via-purple-500 rounded-lg
+                     hover:text-white px-4 py-2">
                     Users
                 </a>
 
                 <a href="{{ route('dashboard') }}"
-                    class="font-bold text-lg block hover:bg-green-700 transition rounded-lg hover:text-white px-4 py-2">
+                    class="font-bold text-lg block hover:bg-gradient-to-r hover:from-indigo-500 hover:via-purple-500 rounded-lg
+                     hover:text-white px-4 py-2">
                     Jobs
                 </a>
             </nav>
@@ -54,7 +59,7 @@
             <form method="POST" action="">
                 @csrf
                 <button type="submit"
-                    class="flex items-center gap-3 px-4 py-2 w-full text-left rounded-lg hover:bg-green-700 transition">
+                    class="flex items-center gap-3 px-4 py-2 w-full text-left   hover:bg-gradient-to-r hover:from-indigo-500 hover:via-purple-500 rounded-lg hover:text-white  transition">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     <span>Logout</span>
                 </button>
