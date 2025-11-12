@@ -33,6 +33,11 @@
                 <a href="{{ route('dashboard') }}"
                     class="font-bold text-lg block hover:bg-gradient-to-r hover:from-indigo-500 hover:via-purple-500 rounded-lg
                      hover:text-white px-4 py-2">
+                    Dashboard
+                </a>
+                <a href="{{ route('tags.index') }}"
+                    class="font-bold text-lg block hover:bg-gradient-to-r hover:from-indigo-500 hover:via-purple-500 rounded-lg
+                     hover:text-white px-4 py-2">
                     Tags
                 </a>
 
