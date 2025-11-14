@@ -10,13 +10,17 @@
         <th class="p-2 border ">Tag Name</th>
         <th class="p-2 border  ">Action</th>
     </tr>
+    @foreach ($tags as $tag)
+
+
     <tr class="text-center">
-        <td class="p-2 border ">1</td>
-        <td class="p-2 border ">Sample Tag</td>
+        <td class="p-2 border ">{{$loop->iteration}}</td>
+        <td class="p-2 border ">{{$tag->name}}</td>
         <td class="p-2 border ">
             <a href="" class="bg-blue-600 text-white px-4 py-1 rounded mr-2">Edit</a>
             <a href="" class="bg-red-600 text-white px-4 py-1 rounded mr-2">Delete</a>
     </tr>
+    @endforeach
 
 </table>
 

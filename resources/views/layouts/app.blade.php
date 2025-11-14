@@ -17,6 +17,7 @@
 </head>
 
 <body class="font-sans antialiased ">
+    @include('layouts.alert')
     <div class="flex min-h-screen bg-gray-50">
 
         <!-- Sidebar -->

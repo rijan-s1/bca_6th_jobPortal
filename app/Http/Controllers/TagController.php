@@ -19,7 +19,7 @@ class TagController extends Controller
             'name' => 'required|unique:tags,name|max:255',
         ]);
         Tag::create($data);
-        dd('done');
+       return redirect()->route('tags.index')->with('success','Tag created successfully.');
     }
 
 }
