@@ -18,7 +18,11 @@
         <td class="p-2 border ">{{$tag->name}}</td>
         <td class="p-2 border ">
             <a onclick="showEditModal('{{$tag->id}}','{{$tag->name}}')"  class="bg-blue-600 text-white px-4 py-1 rounded mr-2 cursor-pointer">Edit</a>
-            <a href="" class="bg-red-600 text-white px-4 py-1 rounded mr-2">Delete</a>
+            <form action="{{route('tags.destroy',$tag->id)}}" method="POST" onsubmit="return confirm('Are you sure to Delete?')" class="bg-red-600 text-white px-4 py-1 rounded inline">
+                @csrf
+                <input type="submit" class="cursor-pointer" value="Delete">
+            </form>
+        </td>
     </tr>
     @endforeach
 
@@ -28,7 +32,7 @@
     <form action="{{route('tags.store')}}" method="POST" class="p-4 bg-white rounded-lg w-1/2">
         @csrf
         <h1 class="font-bold text-xl">Add a New Tag</h1>
-        <input type="text" name="name" placeholder="Enter Tag" class="block w-full rounded ">
+        <input type="text" id="createname" name="name" placeholder="Enter Tag" class="block w-full rounded ">
         <div class="flex justify-end mt-4">
             <input onclick="hideModal()" type="button" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 mr-2" value="Cancel">
             <input type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" value="Update Tag">
@@ -51,6 +55,8 @@
     function showModal(){
         document.getElementById('modal').classList.remove('hidden');
         document.getElementById('modal').classList.add('flex');
+        document.getElementById('createname').focus();
+
     }
     function hideModal(){
         document.getElementById('modal').classList.remove('flex');
@@ -62,6 +68,7 @@
         document.getElementById('editmodal').classList.remove('hidden');
         document.getElementById('editmodal').classList.add('flex');
         document.getElementById('name').value=name;
+        document.getElementById('name').focus();
         document.querySelector('#editmodal form').action = '/tags/update/'+id;
     }
     function hideEditModal(){

@@ -1,52 +1,93 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+@extends('layouts.master')
+
+@section('content')
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-emerald-50 py-10">
+
+  <div class="flex w-full max-w-5xl mx-5 bg-white/70 backdrop-blur-xl shadow-2xl rounded-3xl overflow-hidden border border-white/40">
+
+    <!-- Left Panel (Brand + Illustration) -->
+    <div class="hidden md:flex md:w-1/2 bg-gradient-to-br from-green-600 to-emerald-500 text-white flex-col justify-center items-center p-10 relative">
+      <div class="absolute inset-0 bg-black/10 backdrop-blur-md"></div>
+      <div class="z-10 text-center">
+        <h1 class="text-4xl font-extrabold mb-4 tracking-wide">Join JobFinder!</h1>
+        <p class="text-sm text-green-50 mb-8 leading-relaxed">
+          Create your account and discover amazing career opportunities waiting for you.
+        </p>
+        <img src="{{ asset('images/job.png') }}" class="w-56 mx-auto drop-shadow-lg" alt="Job Illustration">
+      </div>
+    </div>
+
+    <!-- Right Panel (Registration Form) -->
+    <div class="w-full md:w-1/2 p-10 flex flex-col justify-center">
+      <h2 class="text-3xl font-bold text-green-600 mb-2">Create Account</h2>
+      <p class="text-sm text-gray-500 mb-8">Fill in your details to get started</p>
+
+      <!-- Registration Form -->
+      <form action="{{ route('register') }}" method="POST" class="space-y-5">
         @csrf
 
-        <!-- Name -->
+        <!-- Full Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+          <label for="name" class="block text-gray-600 mb-2 text-sm font-medium">Full Name</label>
+          <input id="name" type="text" name="name" placeholder="John Doe"
+                 class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-sm transition"
+                 value="{{ old('name') }}" required>
+          @error('name')
+            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+          @enderror
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-gray-600 mb-2 text-sm font-medium">Email Address</label>
+          <input id="email" type="email" name="email" placeholder="you@example.com"
+                 class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-sm transition"
+                 value="{{ old('email') }}" required>
+          @error('email')
+            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+          @enderror
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div>
+          <label for="password" class="block text-gray-600 mb-2 text-sm font-medium">Password</label>
+          <input id="password" type="password" name="password" placeholder="••••••••"
+                 class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-sm transition"
+                 required>
+          @error('password')
+            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+          @enderror
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div>
+          <label for="password_confirmation" class="block text-gray-600 mb-2 text-sm font-medium">Confirm Password</label>
+          <input id="password_confirmation" type="password" name="password_confirmation" placeholder="••••••••"
+                 class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-sm transition"
+                 required>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+        <!-- Terms & Conditions -->
+        <div class="flex items-start gap-2">
+          <input type="checkbox" name="terms" id="terms" class="accent-green-500 rounded mt-1" required>
+          <label for="terms" class="text-sm text-gray-600">
+            I agree to the <a href="#" class="text-green-600 hover:underline">Terms & Conditions</a> and <a href="#" class="text-green-600 hover:underline">Privacy Policy</a>
+          </label>
         </div>
-    </form>
-</x-guest-layout>
+
+        <!-- Submit -->
+        <button type="submit"
+          class="w-full py-3 bg-green-600 hover:bg-green-700 transition text-white font-semibold rounded-xl shadow-lg hover:shadow-green-500/30">
+          <i class="fa-solid fa-user-plus mr-2"></i> Create Account
+        </button>
+      </form>
+
+      <!-- Login Link -->
+      <p class="text-sm text-gray-600 mt-6 text-center">
+        Already have an account?
+        <a href="{{ route('login') }}" class="text-green-600 font-semibold hover:underline">Login Here</a>
+      </p>
+    </div>
+  </div>
+</div>
+@endsection

@@ -14,6 +14,7 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body class="font-sans antialiased ">
@@ -62,14 +63,20 @@
             </nav>
 
             <!-- Logout Button -->
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('logout') }}" class="mt-4">
                 @csrf
                 <button type="submit"
-                    class="flex items-center gap-3 px-4 py-2 w-full text-left   hover:bg-gradient-to-r hover:from-indigo-500 hover:via-purple-500 rounded-lg hover:text-white  transition">
-                    <i class="fa-solid fa-right-from-bracket"></i>
+                    class="flex items-center gap-3 px-4 py-2 w-full text-left font-bold text-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:via-purple-500 rounded-lg hover:text-white transition">
+
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/logout-rounded-left.png" alt="logout icon"
+                        class="w-6 h-6">
+
                     <span>Logout</span>
                 </button>
             </form>
+
+
+
         </aside>
         <div class="p-4 flex-1">
             <h1 class="text-2xl font-bold">@yield('title')</h1>
