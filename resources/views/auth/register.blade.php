@@ -48,6 +48,7 @@
           @enderror
         </div>
 
+
         <!-- Password -->
         <div>
           <label for="password" class="block text-gray-600 mb-2 text-sm font-medium">Password</label>
@@ -66,6 +67,22 @@
                  class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-sm transition"
                  required>
         </div>
+        <!-- Profile Picture -->
+<div>
+    <label for="profile_photo" class="block text-gray-600 mb-2 text-sm font-medium">
+      Profile Picture
+    </label>
+    <input id="profile_photo"
+           type="file"
+           name="profile_photo"
+           accept="image/*"
+           class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200
+                  focus:outline-none focus:ring-2 focus:ring-green-400
+                  shadow-sm transition">
+    @error('profile_photo')
+      <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+    @enderror
+  </div>
 
         <!-- Terms & Conditions -->
         <div class="flex items-start gap-2">
