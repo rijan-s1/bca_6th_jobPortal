@@ -1,110 +1,220 @@
 @extends('layouts.master')
-
 @section('content')
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-emerald-50 py-10">
+<div class="min-h-screen flex items-center justify-center bg-gray-100 py-8">
+    <div class="w-full max-w-2xl px-4">
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <!-- Toggle Buttons -->
+            <div class="flex border-b border-gray-200">
+                <button type="button" id="userBtn" onclick="showUserForm()"
+                    class="flex-1 py-4 px-6 text-center font-semibold transition-colors duration-200 bg-green-600 text-white">
+                    User Registration
+                </button>
+                <button type="button" id="companyBtn" onclick="showCompanyForm()"
+                    class="flex-1 py-4 px-6 text-center font-semibold transition-colors duration-200 bg-gray-200 text-gray-700 hover:bg-gray-300">
+                    Company Registration
+                </button>
+            </div>
 
-  <div class="flex w-full max-w-5xl mx-5 bg-white/70 backdrop-blur-xl shadow-2xl rounded-3xl overflow-hidden border border-white/40">
+            <!-- User Registration Form -->
+            <div id="userForm" class="p-6">
+                <h2 class="text-2xl font-bold text-green-600 mb-6 text-center">Create User Account</h2>
 
-    <!-- Left Panel (Brand + Illustration) -->
-    <div class="hidden md:flex md:w-1/2 bg-gradient-to-br from-green-600 to-emerald-500 text-white flex-col justify-center items-center p-10 relative">
-      <div class="absolute inset-0 bg-black/10 backdrop-blur-md"></div>
-      <div class="z-10 text-center">
-        <h1 class="text-4xl font-extrabold mb-4 tracking-wide">Join JobFinder!</h1>
-        <p class="text-sm text-green-50 mb-8 leading-relaxed">
-          Create your account and discover amazing career opportunities waiting for you.
-        </p>
-        <img src="{{ asset('images/job.png') }}" class="w-56 mx-auto drop-shadow-lg" alt="Job Illustration">
-      </div>
+                <form action="{{ route('register') }}" method="POST" novalidate enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="user_type" value="user">
+
+                    <div class="mb-4">
+                        <label for="user_name" class="block text-sm font-medium text-gray-700">Name</label>
+                        <input id="user_name" name="name" type="text" required value="{{ old('name') }}"
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600" />
+                        @error('name')
+                            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="user_email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input id="user_email" name="email" type="email" required value="{{ old('email') }}"
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600" />
+                        @error('email')
+                            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="user_password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input id="user_password" name="password" type="password" required
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600" />
+                        @error('password')
+                            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Confirm Password  --}}
+                    <div class="mb-4">
+                        <label for="user_password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                        <input id="user_password_confirmation" name="password_confirmation" type="password" required
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="user_address" class="block text-sm font-medium text-gray-700">Address</label>
+                        <textarea id="user_address" name="address" rows="2"
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600">{{ old('address') }}</textarea>
+                        @error('address')
+                            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="user_phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                        <input id="user_phone" name="phone" type="tel" value="{{ old('phone') }}"
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600" />
+                        @error('phone')
+                            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Profile Picture --}}
+                    <div class="mb-6">
+                        <label for="user_profile_picture" class="block text-sm font-medium text-gray-700">Profile Picture</label>
+                        <input id="user_profile_picture" name="profile_picture" type="file"
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600" />
+                        @error('profile_picture')
+                            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-colors duration-200">
+                        Register as User
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">
+                        Already have an account?
+                        <a href="{{ route('login') }}" class="font-medium text-green-600 hover:text-green-500 hover:underline">
+                            Sign in
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Company Registration Form -->
+            <div id="companyForm" class="p-6 hidden">
+                <h2 class="text-2xl font-bold text-green-600 mb-6 text-center">Create Company Account</h2>
+
+                <form action="{{ route('register') }}" method="POST" novalidate enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="user_type" value="company">
+
+                    <div class="mb-4">
+                        <label for="company_name" class="block text-sm font-medium text-gray-700">Company Name</label>
+                        <input id="company_name" name="name" type="text" required value="{{ old('name') }}"
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600" />
+                        @error('name')
+                            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="company_email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input id="company_email" name="email" type="email" required value="{{ old('email') }}"
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600" />
+                        @error('email')
+                            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="company_password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input id="company_password" name="password" type="password" required
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600" />
+                        @error('password')
+                            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Confirm Password  --}}
+                    <div class="mb-4">
+                        <label for="company_password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                        <input id="company_password_confirmation" name="password_confirmation" type="password" required
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="company_address" class="block text-sm font-medium text-gray-700">Address</label>
+                        <textarea id="company_address" name="address" rows="2"
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600">{{ old('address') }}</textarea>
+                        @error('address')
+                            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="company_phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                        <input id="company_phone" name="phone" type="tel" value="{{ old('phone') }}"
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600" />
+                        @error('phone')
+                            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Profile Picture --}}
+                    <div class="mb-6">
+                        <label for="company_profile_picture" class="block text-sm font-medium text-gray-700">Profile Picture</label>
+                        <input id="company_profile_picture" name="profile_picture" type="file"
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600" />
+                        @error('profile_picture')
+                            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-colors duration-200">
+                        Register as Company
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">
+                        Already have an account?
+                        <a href="{{ route('login') }}" class="font-medium text-green-600 hover:text-green-500 hover:underline">
+                            Sign in
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Right Panel (Registration Form) -->
-    <div class="w-full md:w-1/2 p-10 flex flex-col justify-center">
-      <h2 class="text-3xl font-bold text-green-600 mb-2">Create Account</h2>
-      <p class="text-sm text-gray-500 mb-8">Fill in your details to get started</p>
-
-      <!-- Registration Form -->
-      <form action="{{ route('register') }}" method="POST" class="space-y-5">
-        @csrf
-
-        <!-- Full Name -->
-        <div>
-          <label for="name" class="block text-gray-600 mb-2 text-sm font-medium">Full Name</label>
-          <input id="name" type="text" name="name" placeholder="John Doe"
-                 class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-sm transition"
-                 value="{{ old('name') }}" required>
-          @error('name')
-            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-          @enderror
-        </div>
-
-        <!-- Email -->
-        <div>
-          <label for="email" class="block text-gray-600 mb-2 text-sm font-medium">Email Address</label>
-          <input id="email" type="email" name="email" placeholder="you@example.com"
-                 class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-sm transition"
-                 value="{{ old('email') }}" required>
-          @error('email')
-            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-          @enderror
-        </div>
-
-
-        <!-- Password -->
-        <div>
-          <label for="password" class="block text-gray-600 mb-2 text-sm font-medium">Password</label>
-          <input id="password" type="password" name="password" placeholder="••••••••"
-                 class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-sm transition"
-                 required>
-          @error('password')
-            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-          @enderror
-        </div>
-
-        <!-- Confirm Password -->
-        <div>
-          <label for="password_confirmation" class="block text-gray-600 mb-2 text-sm font-medium">Confirm Password</label>
-          <input id="password_confirmation" type="password" name="password_confirmation" placeholder="••••••••"
-                 class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-sm transition"
-                 required>
-        </div>
-        <!-- Profile Picture -->
-<div>
-    <label for="profile_photo" class="block text-gray-600 mb-2 text-sm font-medium">
-      Profile Picture
-    </label>
-    <input id="profile_photo"
-           type="file"
-           name="profile_photo"
-           accept="image/*"
-           class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200
-                  focus:outline-none focus:ring-2 focus:ring-green-400
-                  shadow-sm transition">
-    @error('profile_photo')
-      <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-    @enderror
-  </div>
-
-        <!-- Terms & Conditions -->
-        <div class="flex items-start gap-2">
-          <input type="checkbox" name="terms" id="terms" class="accent-green-500 rounded mt-1" required>
-          <label for="terms" class="text-sm text-gray-600">
-            I agree to the <a href="#" class="text-green-600 hover:underline">Terms & Conditions</a> and <a href="#" class="text-green-600 hover:underline">Privacy Policy</a>
-          </label>
-        </div>
-
-        <!-- Submit -->
-        <button type="submit"
-          class="w-full py-3 bg-green-600 hover:bg-green-700 transition text-white font-semibold rounded-xl shadow-lg hover:shadow-green-500/30">
-          <i class="fa-solid fa-user-plus mr-2"></i> Create Account
-        </button>
-      </form>
-
-      <!-- Login Link -->
-      <p class="text-sm text-gray-600 mt-6 text-center">
-        Already have an account?
-        <a href="{{ route('login') }}" class="text-green-600 font-semibold hover:underline">Login Here</a>
-      </p>
-    </div>
-  </div>
 </div>
+
+<script>
+    function showUserForm() {
+        // Show user form, hide company form
+        document.getElementById('userForm').classList.remove('hidden');
+        document.getElementById('companyForm').classList.add('hidden');
+
+        // Update button styles
+        document.getElementById('userBtn').classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+        document.getElementById('userBtn').classList.add('bg-green-600', 'text-white');
+
+        document.getElementById('companyBtn').classList.remove('bg-green-600', 'text-white');
+        document.getElementById('companyBtn').classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+    }
+
+    function showCompanyForm() {
+        // Show company form, hide user form
+        document.getElementById('companyForm').classList.remove('hidden');
+        document.getElementById('userForm').classList.add('hidden');
+
+        // Update button styles
+        document.getElementById('companyBtn').classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+        document.getElementById('companyBtn').classList.add('bg-green-600', 'text-white');
+
+        document.getElementById('userBtn').classList.remove('bg-green-600', 'text-white');
+        document.getElementById('userBtn').classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+    }
+</script>
 @endsection
